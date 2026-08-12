@@ -1,0 +1,116 @@
+schema_version: 1
+section: 2
+canonical_source: REPORT.md
+
+requirements:
+  - id: R01
+    name: cross_session_continuity_of_accepted_state
+    required_guarantee: deterministic
+    status: partial
+    note: "Solved for code via protected Git ref. Convention required for other artifacts."
+  - id: R02
+    name: recovery_after_parent_session_replacement
+    required_guarantee: deterministic
+    quality_of_subsequent_work: probabilistic
+    status: partial
+  - id: R03
+    name: accepted_vs_working_proposed
+    required_guarantee: deterministic
+    status: partial
+  - id: R04
+    name: owner_intent_persistence
+    required_guarantee: process_dependent
+    storage_guarantee: deterministic
+    status: partial
+  - id: R05
+    name: provenance_artifacts_and_decisions
+    artifact_guarantee: deterministic
+    decision_guarantee: process_dependent
+    status: partial
+  - id: R06
+    name: task_result_contracts
+    schema_guarantee: deterministic
+    acceptance_guarantee: human_dependent
+    status: partial
+  - id: R07
+    name: child_lifecycle_supervision
+    required_guarantee: deterministic
+    status: partial
+    note: "ADOPT Temporal parent-close; agent UIs do not provide this."
+  - id: R08
+    name: orphan_child_detection
+    required_guarantee: deterministic
+    status: partial
+  - id: R09
+    name: terminal_execution_neq_accepted_deliverable
+    required_guarantee: deterministic
+    status: unsolved_as_uniform_primitive
+    commodity_verdict: WRAP
+  - id: R10
+    name: interrupt_retry_resume_replay_idempotency
+    required_guarantee: deterministic
+    status: solved
+    condition: "If tools are wrapped as activities/steps"
+  - id: R11
+    name: long_running_workflows
+    required_guarantee: deterministic
+    status: solved
+  - id: R12
+    name: multi_agent_concurrency_and_ownership
+    mechanical_guarantee: deterministic
+    social_guarantee: process_dependent
+    status: partial
+  - id: R13
+    name: model_provider_replacement
+    required_guarantee: deterministic
+    status: partial
+    condition: "Authority must not live in a vendor memory store"
+  - id: R14
+    name: routing_fallback_heterogeneous_executors
+    required_guarantee: process_dependent
+    status: defer
+  - id: R15
+    name: memory_vs_authoritative_truth
+    required_guarantee: deterministic
+    status: unsolved_in_most_agent_products
+    note: "Solved by policy if memory is declared advisory"
+  - id: R16
+    name: repo_vs_live_production_divergence
+    required_guarantee: measured
+    process: process_dependent
+    status: partial
+  - id: R17
+    name: human_approval_boundaries
+    gate_guarantee: deterministic
+    decision_guarantee: human_dependent
+    status: partial
+  - id: R18
+    name: least_privilege_machine_identity
+    required_guarantee: deterministic
+    status: solved
+  - id: R19
+    name: audit_logs_and_observability
+    event_retention: deterministic
+    trace_quality: measured
+    status: partial
+  - id: R20
+    name: policy_invariant_enforcement
+    required_guarantee: deterministic
+    status: partial
+  - id: R21
+    name: artifact_integrity_attestation
+    bits_guarantee: deterministic
+    meaning_guarantee: none
+    status: solved_for_bits
+  - id: R22
+    name: scientific_evaluation_of_continuity_claims
+    required_guarantee: measured
+    status: unsolved
+  - id: R23
+    name: handoff_packet_completeness
+    required_guarantee: deterministic
+    status: wrap
+  - id: R24
+    name: authorization_of_next_actions_after_resume
+    required_guarantee: deterministic
+    status: wrap

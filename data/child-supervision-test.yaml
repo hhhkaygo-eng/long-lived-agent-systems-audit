@@ -1,0 +1,77 @@
+schema_version: 1
+section: 8
+canonical_source: REPORT.md
+kind: experiment_spec
+status: specified_not_executed
+failure_mode: "Parent spawns children, continues other work, forgets children that are running, failed, or completed without accepted deliverables."
+
+fixture:
+  parent: P
+  children:
+    C1: long_running
+    C2: fails
+    C3: completes_and_writes_PR
+    C4: completes_and_only_writes_chat_summary
+  then: "P does unrelated work and is killed"
+  recovery: "P2 starts from projector only"
+
+tests:
+  - id: T1
+    name: awareness_while_children_run
+    observability_pass: "P can query C1-C4 status without remembering them"
+    policy_pass: "spawn without a durable child id is rejected"
+  - id: T2
+    name: terminal_vs_accepted
+    observability_pass: "C3 = execution complete + PR proposed; C4 = execution complete + not accepted"
+    policy_pass: "C3/C4 cannot be marked ACCEPTED by child or parent agent"
+  - id: T3
+    name: orphan_detection
+    observability_pass: "after P dies, list-children still returns C1-C4"
+    policy_pass: "alert if child has no live parent AND policy != ABANDON"
+  - id: T4
+    name: parent_close
+    observability_pass: "on P completion, C1 terminated or cancelled unless ABANDON explicit"
+    policy_pass: "default terminate; ABANDON requires new parent obligation id"
+    sources: [SRC-TEMPORAL-PCP]
+  - id: T5
+    name: recovery_after_interruption
+    observability_pass: "P2 lists C1 running, C2 failed, C3 delivered-unaccepted, C4 delivered-unaccepted"
+    policy_pass: "P2 cannot start-fresh C3 work without seeing existing PR"
+  - id: T6
+    name: continue_as_new_or_session_rollover
+    observability_pass: "if engine drops child pointers on continue, obligation record still has child ids"
+    policy_pass: "projector reads obligation record, not only the new workflow instance"
+    sources: [SRC-TEMPORAL-CHILD]
+
+observability_vs_enforcement:
+  observability_problem:
+    definition: "child ran but nobody can see it"
+    fix: "register children in workflow engine; surface in projector"
+    class: commodity
+  policy_problem:
+    definition: "everybody can see C4 completed, agent closes the ticket"
+    fix: "acceptance ACL"
+    class: commodity_plus_WRAP
+  runtime_support_problem:
+    definition: "agent products never register children durably"
+    evidence:
+      - source: SRC-CC-SUBAGENTS
+        fact: "subagents work within a single session; parent-end and orphans undocumented"
+      - source: SRC-OPENHANDS-TASK
+        fact: "parent blocks until child completes; avoids orphans by refusing asynchrony"
+
+native_runtime_support_necessary:
+  already_in_temporal_restate:
+    - durable_child_id_at_spawn
+    - parent_close_policy
+    - visibility_list_by_parent_or_obligation
+    - cancellation
+    - result_payload_independent_of_parent_chat
+  not_necessary:
+    - child_personality
+    - child_memory_os
+    - new_registry_service
+
+recommendation:
+  - "Treat unmanaged async subagents as unsafe for unattended long-horizon work"
+  - "Either make them child workflows or keep them synchronous and short"

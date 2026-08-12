@@ -1,0 +1,80 @@
+schema_version: 1
+section: 10
+canonical_source: REPORT.md
+note: "Only gaps that survived the prior-art scan. No BUILD items."
+
+gaps:
+  - id: G1
+    uncovered: "Uniform ACCEPTED ≠ FINISHED for non-code, non-PR deliverables"
+    severity: high
+    required_guarantee: deterministic
+    smallest_seam: "Issue/obligation state machine + ACL (agent cannot set ACCEPTED)"
+    verdict: WRAP
+    next_evidence: "Deploy WRAP on 1 project; see if Session B mis-classifies delivered items"
+  - id: G2
+    uncovered: "Session-replacement benchmark does not exist"
+    severity: high_for_claims_low_for_ops
+    required_guarantee: measured
+    smallest_seam: "Public fixture + scorer as in §7"
+    verdict: DEFER
+    next_evidence: "Run §7 at N>=1 internally; then pre-register"
+  - id: G3
+    uncovered: "Agent UIs spawn children that are not durable workflows"
+    severity: high_for_unattended
+    required_guarantee: deterministic
+    smallest_seam: "Ban or adapter: Task tool → start_child"
+    verdict: WRAP
+    alt: REJECT_unmanaged
+    next_evidence: "Instrument Claude Code / OpenHands under T1-T6"
+  - id: G4
+    uncovered: "Temporal Continue-As-New drops child bindings from the new parent instance"
+    severity: medium
+    required_guarantee: deterministic
+    smallest_seam: "Obligation record holds child ids; projector uses that"
+    verdict: WRAP
+    next_evidence: "Reconfirm current Temporal behavior against SRC-TEMPORAL-CHILD"
+  - id: G5
+    uncovered: "Model may ignore recovered authority"
+    severity: high
+    required_guarantee: probabilistic
+    smallest_seam: "Deny tools until RECOVERY_REPORT matches HANDOFF"
+    verdict: WRAP
+    next_evidence: "Measure mismatch rate in §7"
+  - id: G6
+    uncovered: "Product memory can contaminate recovery"
+    severity: medium
+    required_guarantee: deterministic
+    smallest_seam: "Session B with memory wiped must still pass"
+    verdict: WRAP
+    next_evidence: "Ablation in §7.4"
+  - id: G7
+    uncovered: "GenAI telemetry names still Development"
+    severity: low
+    required_guarantee: measured
+    smallest_seam: "Pin a semconv version; do not parse names as API"
+    verdict: DEFER
+    next_evidence: "Watch OTel GenAI stability"
+  - id: G8
+    uncovered: "Admin/bypass paths can silently accept"
+    severity: medium
+    required_guarantee: process_dependent
+    smallest_seam: "Log + alert on bypass; cannot eliminate on GitHub"
+    verdict: DEFER
+    next_evidence: "Org policy review"
+  - id: G9
+    uncovered: "Live prod vs repo HEAD"
+    severity: medium
+    required_guarantee: measured
+    smallest_seam: "Existing GitOps/deploy attestation"
+    verdict: ADOPT
+    note: "Not agent-specific"
+    next_evidence: "Standard drift check"
+  - id: G10
+    uncovered: "Independent reproduction of 2026 memory-leaderboard / Mem0 scores"
+    severity: low_for_architecture
+    required_guarantee: measured
+    smallest_seam: "Third-party rerun"
+    verdict: DEFER
+    next_evidence: "Ignore vendor scores until then"
+
+build_gaps: []

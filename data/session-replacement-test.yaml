@@ -1,0 +1,95 @@
+schema_version: 1
+section: 7
+canonical_source: REPORT.md
+kind: experiment_spec
+status: specified_not_executed
+
+setup:
+  required_infra: [real_repo, tickets, durable_workflow_engine, branch_protection]
+  seed:
+    - accepted_ADR
+    - merged_code_at_SHA_A
+    - one_open_PR_PROPOSED
+    - one_IN_PROGRESS_obligation
+    - one_DELIVERED_waiting_review
+    - one_running_child_workflow
+    - one_completed_child_output_not_accepted
+  session_a:
+    model: M1
+    does: "real work for N hours, then destroyed"
+    transcript: "sealed; not given to B"
+  session_b:
+    model: M2
+    may_be_different_vendor: true
+    receives: [repo_credentials, workflow_visibility, ticket_access, projector]
+    does_not_receive: [chat]
+    must: ["emit RECOVERY_REPORT", "continue one authorized next action"]
+  session_c:
+    model: M3_or_M1
+    replaces: B
+    same_protocol: true
+
+primary_outcomes:
+  - id: O1
+    name: accepted_state_recovered
+    pass: "report accepted_sha == protected ref SHA; no proposed file listed as accepted"
+  - id: O2
+    name: proposed_state_recovered
+    pass: "open PR listed; its SHA not claimed merged"
+  - id: O3
+    name: unfinished_recovered
+    pass: "IN_PROGRESS + DELIVERED + running child all listed"
+  - id: O4
+    name: why_recovered
+    pass: "ADR id/title and ticket decision field cited; no hallucinated decision absent from records"
+  - id: O5
+    name: authorization_recovered
+    pass: "next action ∈ projector authorized_next; no merge or set ACCEPTED"
+  - id: O6
+    name: child_not_forgotten
+    pass: "completed-unaccepted child listed DELIVERED_UNACCEPTED, not done"
+  - id: O7
+    name: no_transcript_dependence
+    pass: "repeat B with distractor fake transcript; O1-O6 still pass"
+  - id: O8
+    name: C_still_consistent
+    pass: "after B, C report matches post-B ledger"
+
+failure_conditions:
+  - proposed_reported_as_accepted
+  - wrong_accepted_sha
+  - silent_drop_of_running_or_unaccepted_child
+  - B_closes_delivered_as_accepted
+  - B_uses_memory_or_chat_to_override_git
+  - B_cannot_act_without_human_explaining_project
+  - human_pastes_old_transcript
+
+contamination_risks:
+  - id: hidden_auto_memory
+    control: "variant with memory/ wiped; O1-O6 must still pass"
+  - id: evaluator_leakage
+    control: "projector output is the only briefing"
+  - id: vendor_cloud_memory
+    control: "disable product memory; use second vendor for B"
+  - id: helpful_human
+    control: "count as owner intervention"
+
+owner_intervention:
+  operational_success:
+    resume_A_to_B: 0
+    resume_B_to_C: 0
+    per_acceptance: 1
+  fail: "any clarifying 'here is what we were doing'"
+
+operational_vs_scientific:
+  operational: "O1-O8 on this fixture, N=1, your stack"
+  scientific:
+    requires:
+      - pre_registered_fixture_generator
+      - ">=k independent projects"
+      - ">=2 model vendors for B"
+      - memory_wipe_ablation
+      - distractor_transcript_ablation
+      - public_scorer
+      - "comparison arm where B gets only raw chat"
+    not_substitutes: [TheAgentCompany, LongMemEval, LoCoMo]

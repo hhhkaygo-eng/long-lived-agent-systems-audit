@@ -1,0 +1,130 @@
+schema_version: 1
+section: 6
+canonical_source: REPORT.md
+name: thinnest_architecture_today
+
+layers:
+  authority:
+    role: authority
+    contents:
+      - "protected Git ref (usually main) = accepted artifacts"
+      - "signed release tags for deployables"
+      - "tickets/PRs in ACCEPTED or REJECTED, writable only by human identity or human signal"
+      - "ADR/RFC files merged via the same review gate"
+      - "workflow execution current state for process facts (running children, pending approvals)"
+    session_b_rule: "These four are the only things Session B is allowed to trust."
+
+  working:
+    role: working
+    contents:
+      - topic_branches
+      - worktrees
+      - draft_PRs
+      - unmerged_ADRs
+      - DELIVERED_tickets
+      - local_scratch
+      - checkpointer_blobs
+      - chat_transcripts
+    rule: "Working state may be lost. If it mattered, it should have been a workflow step result or a still-referenced commit."
+
+  runtime:
+    role: runtime
+    contents:
+      - "disposable model session"
+    loads: ["projector output", "relevant accepted files", "current ticket"]
+    must_not: ["load prior chat as authority"]
+
+  execution:
+    role: execution
+    unit: "one durable workflow per obligation, not per chat"
+    rules:
+      - "Activities wrap every effectful tool"
+      - "Idempotency keys on effects"
+      - "Children are child workflows with explicit Parent Close Policy"
+      - "Default TERMINATE unless ABANDON and re-parented in the obligation record"
+      - "HITL is signal/awakeable/wait-for-event"
+
+  evidence:
+    role: evidence
+    contents: [workflow_event_history, git_history, otel_traces, ci_logs]
+    rule: "Evidence is reconstructive, not authoritative for acceptance."
+
+  memory:
+    role: memory
+    contents:
+      - "INTENT.md / ADRs in repo (reviewed)"
+      - "optional auto-notes marked as hints"
+      - "optional retrieval over issues and ADRs"
+    rule: "Memory writes by the model never change accepted state."
+
+  policy:
+    role: policy
+    evaluated: outside_the_model
+    invariants:
+      - id: P1
+        text: "Agent identity cannot merge to protected refs"
+      - id: P2
+        text: "Agent identity cannot set ACCEPTED"
+      - id: P3
+        text: "Agent identity cannot mint credentials broader than current obligation scope"
+      - id: P4
+        text: "Effectful tools unavailable until recovery report validates against projector"
+      - id: P5
+        text: "Children must have a workflow id recorded on the obligation before spawn succeeds"
+      - id: P6
+        text: "Closing a parent obligation while children are RUNNING is denied unless ABANDON + new parent id"
+    implementation: ["GitHub rulesets", "OPA/Cedar", "client hooks", "workflow assertions"]
+
+  identity:
+    role: identity
+    humans: IdP_users
+    agents: "GitHub App installation or SPIFFE SVID"
+    session_id: workflow_id
+    git_author: "Agent-Name[bot]"
+
+  human:
+    role: human
+    mechanisms: ["CODEOWNERS", "required reviews", "explicit accept/reject", "PR merge as accept when deliverable is the PR"]
+    break_glass: "admin bypass exists and must be logged"
+
+  handoff:
+    path:
+      - "Session A dies; workflow and Git/tickets remain"
+      - "Session B client runs projector (no model yet)"
+      - "projector emits HANDOFF"
+      - "schema validate; fail closed"
+      - "model receives only HANDOFF + needed files"
+      - "model emits RECOVERY_REPORT"
+      - "mechanical diff against HANDOFF; mismatch → stop or read-only"
+      - "work continues as activities"
+      - "Session C replaces B the same way"
+    owner_intervention_target:
+      resume: 0
+      per_acceptance: 1
+
+must_not_include:
+  - chat_transcript_as_source_of_truth
+  - vector_memory_as_source_of_truth
+  - second_project_database_that_can_disagree_with_git
+  - agent_owned_mark_accepted
+  - unmanaged_subagents_for_unattended_work
+  - custom_event_store
+  - custom_identity_fabric
+  - custom_artifact_cas
+  - custom_policy_language
+  - framework_checkpoints_as_durability_for_effects
+  - per_model_proprietary_memory_unreadable_by_next_vendor
+  - org_ai_governance_that_duplicates_scm_iam_logs
+
+handoff_schema_sketch:
+  HANDOFF:
+    accepted_sha: string
+    open_proposals: list
+    obligations: list
+    running_children: list
+    pending_approvals: list
+    authorized_next: list
+  RECOVERY_REPORT:
+    echo_accepted_sha: string
+    unfinished: list
+    propose_next: string

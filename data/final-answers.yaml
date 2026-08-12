@@ -1,0 +1,130 @@
+schema_version: 1
+section: 11
+canonical_source: REPORT.md
+
+answers:
+  Q1:
+    question: "Is persistent AI memory actually the central problem, or is the real problem durable authoritative state + recovery discipline?"
+    answer: durable_authoritative_state_plus_recovery_discipline
+    also: "explicit finished ≠ accepted bit that the model cannot set"
+    memory_role: "runtime recall into a finite context window; wrong layer for intent/obligations/children/acceptance"
+    sources: [SRC-MEMGPT-PAPER, SRC-CC-MEMORY]
+
+  Q2:
+    question: "Can Git/GitHub-like systems plausibly serve as the durable cognition/authority substrate for replaceable agents?"
+    authority: yes
+    cognition: no
+    why_authority: "Git is already event-sourced record for file trees; review is already an acceptance protocol"
+    why_not_cognition: "Do not store chain-of-thought as commits and call it cognition"
+    limits: ["non-file artifacts", "admin bypass", "rubber-stamp reviews", "work that never touches the repo"]
+    implication: "WRAP (put more artifacts in the repo; add obligation state), not a parallel brain"
+    sources: [SRC-FOWLER-ES, SRC-GH-PROTECTED]
+
+  Q3:
+    question: "What should remain in an agent runtime versus outside it?"
+    inside_disposable:
+      - model_call_loop
+      - tool_schemas
+      - context_packing
+      - streaming_ux
+      - speculative_edits
+      - short_synchronous_helpers
+      - retrieval_queries
+      - untrusted_memory_files
+    outside_authoritative:
+      - git_refs
+      - review
+      - obligation_states
+      - durable_workflows
+      - child_lifecycle
+      - credentials
+      - policy_decisions
+      - acceptance
+      - release_provenance
+      - audit_retention
+    rule: "If Session B cannot die without destroying X, X must not live in the runtime."
+
+  Q4:
+    question: "What is the minimum additional layer needed above mature infrastructure?"
+    items:
+      - id: WRAP-1
+        name: contract_schema
+        text: "Obligation states include DELIVERED and ACCEPTED; agent identities cannot write ACCEPTED"
+      - id: WRAP-2
+        name: deterministic_projector
+        text: "HANDOFF from Git + tickets + workflow visibility; validated; only briefing"
+      - id: WRAP-3
+        name: recovery_gate
+        text: "No effectful tools until RECOVERY_REPORT type-checks against HANDOFF"
+    plus_social_rule: "unmanaged async children are forbidden"
+    not_a_product: true
+
+  Q5:
+    question: "Which fashionable agent-system ideas are mostly reinventions?"
+    table:
+      - idea: "Agent OS / control plane"
+        of: "Git + workflow engine + tickets + IAM"
+      - idea: "Persistent agent memory as source of truth"
+        of: "A wiki the model can vandalize"
+      - idea: "Custom event ledger for agents"
+        of: "Git history + Temporal/Restate journal + OTel"
+      - idea: "Agent identity fabric"
+        of: "SPIFFE or GitHub Apps"
+      - idea: "Child-agent mesh / swarm"
+        of: "Child workflows + parent close"
+      - idea: "Checkpoint = durable execution"
+        of: "incorrect weaker reinvention"
+      - idea: "Tool-call graphs as workflow engines"
+        of: "Temporal/Restate/Inngest"
+      - idea: "Vector DB as project memory"
+        of: "Search over the repo and tickets"
+      - idea: "Approval microservice"
+        of: "Required reviews + workflow signals"
+      - idea: "Provenance for every thought"
+        of: "Git commits + SLSA for releases"
+      - idea: "Multi-agent org charts"
+        of: "CODEOWNERS + tickets"
+
+  Q6:
+    question: "What would you not build today?"
+    do_not_build:
+      - memory_os
+      - custom_durable_execution_engine
+      - custom_policy_language
+      - custom_identity_system
+      - custom_artifact_cas
+      - custom_provenance_platform
+      - agent_native_task_tracker
+      - async_subagent_runtime_that_is_not_a_workflow_engine
+      - vendor_lock_brain_unreadable_by_session_c
+      - org_ai_governance_duplicating_scm_iam_logs
+      - automatic_acceptance
+
+  Q7:
+    question: "What single experiment would most change your architectural conclusion?"
+    experiment: "§7 session-replacement test with memory-wipe and distractor-transcript ablations, two model vendors"
+    overturns_audit_if:
+      - "Architecture A (Git+tickets+workflows, memory wiped) fails O1-O6"
+      - "AND Architecture C (memory OS / checkpointer restored, Git hidden) passes"
+    or: "a custom control plane beats A by a margin not explained by 'they stored acceptance in a database'"
+
+smallest_invention: >
+  A schema and two programs: the obligation/acceptance contract, the projector
+  that prints HANDOFF, and the gate that refuses to work until RECOVERY_REPORT
+  matches. Everything else is adoption. Do not invent an agent operating system.
+
+competing_architectures:
+  A:
+    name: "Git + tickets + durable workflows + thin WRAP"
+    primary_ai_framework: false
+    recommended: true
+    falsifier: "§7 where B cannot recover from Git+tickets+workflows but can from a memory-OS"
+  B:
+    name: "Agent-framework graphs with checkpointers"
+    recommended: false
+    use_as: "runtime only, not substrate"
+    falsifier: "kill-9 mid-tool recovery equal to Temporal AND §7 pass on checkpointer alone"
+  C:
+    name: "Stateful memory runtime (Letta/MemGPT)"
+    recommended: false
+    falsifier: "§7 with memory wiped and only memory DB restored beats architecture A"

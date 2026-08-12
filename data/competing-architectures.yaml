@@ -1,0 +1,85 @@
+schema_version: 1
+section: 9
+canonical_source: REPORT.md
+
+architectures:
+  - id: A
+    name: git_tickets_durable_workflows_thin_wrap
+    primarily_an_ai_agent_framework: false
+    recommended: true
+    strengths:
+      - "Authority older than LLMs"
+      - "Session replacement is a query"
+      - "Children and HITL already exist"
+      - "Model swap is cheap"
+      - "Audit is native"
+      - "Deletes the control plane"
+    hidden_assumptions:
+      - "Org turns on branch protection"
+      - "Effects live in activities"
+      - "Someone writes the projector and ACCEPTED state"
+      - "Humans accept via review"
+      - "Agents work primarily by changing repo-resident artifacts"
+    failure_modes:
+      - "Non-code work left in Slack"
+      - "Unmanaged subagents"
+      - "Admin bypass"
+      - "Continue-As-New losing child pointers if obligation records sloppy"
+      - "Rubber-stamp PRs"
+    replacement_cost: low
+    falsifier: "§7 where B cannot recover from Git+tickets+workflows but can from a memory-OS or control plane"
+
+  - id: B
+    name: agent_framework_graphs_with_checkpointers
+    examples: [LangGraph, Microsoft_Agent_Framework]
+    primarily_an_ai_agent_framework: true
+    recommended: false
+    use_as: "runtime / DX, not substrate"
+    strengths:
+      - "Fast HITL graph prototypes"
+      - "Time-travel"
+      - "Thread memory DX"
+    hidden_assumptions:
+      - "Declared graph state is complete"
+      - "Side effects checkpoint atomically (often false)"
+      - "Checkpointer blob readable by next vendor"
+      - "Docs 'fault tolerance' equals production durability"
+    failure_modes:
+      - "Atomicity gap between effect and checkpoint"
+      - "Blob lock-in"
+      - "Accepted vs working collapsed into one state dict"
+      - "Children as nested graphs without parent-close"
+      - "Session B trusts previous model's summary field"
+    replacement_cost: high_if_authority_in_graph_state
+    falsifier: "kill-9 mid-tool recovery equal to Temporal AND §7 pass on checkpointer alone (no Git)"
+    sources: [SRC-LANGGRAPH-PERS, SRC-MS-AF-CP, SRC-DIAGRID-CP, SRC-MS-AF-DISC, SRC-MS-DURABLE-EXT]
+    note: "Microsoft Durable Extension is a migration path from B toward A"
+
+  - id: C
+    name: stateful_memory_runtime
+    examples: [Letta, MemGPT]
+    primarily_an_ai_agent_framework: true
+    recommended: false
+    strengths:
+      - "Honest about finite context"
+      - "Self-editing memory inspectable in principle"
+      - "Best-studied paging design"
+    hidden_assumptions:
+      - "What the agent remembers is what the project is"
+      - "Persistence of blocks equals persistence of obligations"
+      - "Chat-QA evals transfer to multi-week software/ops work"
+    failure_modes:
+      - "Memory drift becomes truth"
+      - "Different model cannot read the store"
+      - "No acceptance bit"
+      - "Children forgotten because they are not memory objects"
+      - "Vendor benchmark inflation"
+    replacement_cost: high_if_memory_db_is_the_project
+    falsifier: "§7 with memory wiped and only memory DB restored beats architecture A"
+    sources: [SRC-MEMGPT-PAPER, SRC-LETTA-BLOCKS, SRC-LOCOMO, SRC-MEM0-2026]
+
+honorable_mention:
+  id: claude_code_files_plus_hooks
+  why: "Least-wrong agent product posture: accepted state is still Git, notes are files, enforcement is hooks"
+  not: "a multi-week unattended supervisor (subagent lifecycle gaps)"
+  sources: [SRC-CC-MEMORY, SRC-CC-SUBAGENTS]
