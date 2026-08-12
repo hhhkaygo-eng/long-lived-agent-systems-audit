@@ -1,0 +1,41 @@
+schema_version: 1
+
+epistemic_status:
+  FACT: "Verified against a primary source listed in sources.yaml"
+  INFERENCE: "Reasonable conclusion from facts; not a direct quote"
+  HYPOTHESIS: "Plausible and unproven"
+  MARKETING: "Vendor, README, or blog claim; not treated as runtime proof"
+  UNKNOWN: "Not verified; do not invent a filler"
+
+commodity_verdict:
+  ADOPT: "Mature primitive already solves the requirement"
+  WRAP: "Existing primitive solves most of it; needs a thin adapter or policy"
+  BUILD: "Genuinely irreducible custom capability (must pass 4-part test)"
+  DELETE: "Unnecessary layer; remove"
+  DEFER: "Not justified until evidence demands it"
+  REJECT: "Wrong tool or actively harmful if treated as authority"
+
+guarantee_level:
+  deterministic: "System can enforce the property if correctly configured"
+  measured: "Can be measured; not guaranteed per run"
+  probabilistic: "Model or retrieval behavior; no hard guarantee"
+  process_dependent: "Holds only if humans/operators follow a process"
+  human_dependent: "Requires a human decision or review"
+  unknown: "Guarantee class not established"
+
+requirement_status:
+  solved: "Commodity primitive covers the requirement at the stated guarantee"
+  partial: "Covered for a subset of artifacts or only if operators opt in"
+  unsolved: "No mature primitive covers the stated guarantee"
+  scientific: "Operational workaround exists; scientific evidence does not"
+
+layer_role:
+  authority: "Source of truth; replacement sessions must trust this over chat"
+  working: "Proposed / dirty / unaccepted"
+  runtime: "Session-scoped executor; disposable"
+  execution: "Durable process / retry / resume"
+  evidence: "What happened; not what is accepted"
+  memory: "Advisory recall; never authority"
+  policy: "What is allowed"
+  identity: "Who is acting"
+  human: "Who may accept"

@@ -1,0 +1,63 @@
+schema_version: 1
+section: 5
+canonical_source: REPORT.md
+build_count: 0
+rule: "BUILD only if all four clauses hold. Failure of any clause → not BUILD."
+
+tested_and_rejected:
+  - id: CAND-1
+    name: obligation_acceptance_contract
+    clause1_requirement_exists: true
+    clause2_prior_art_incomplete: "only as a uniform API; GitHub review + Temporal signal exist"
+    clause3_wrapper_insufficient: false
+    clause4_process_dependence_unacceptable: false
+    verdict: WRAP
+    covers: [R03, R06, R09]
+  - id: CAND-2
+    name: deterministic_recovery_projector
+    clause1_requirement_exists: true
+    clause2_prior_art_incomplete: false
+    clause3_wrapper_insufficient: false
+    clause4_process_dependence_unacceptable: false
+    note: "git/gh/temporal APIs already expose the data; a script emits HANDOFF"
+    verdict: WRAP
+    covers: [R02, R23, R24]
+  - id: CAND-3
+    name: child_registry
+    clause1_requirement_exists: true
+    clause2_prior_art_incomplete: false
+    clause3_wrapper_insufficient: false
+    clause4_process_dependence_unacceptable: true
+    note: "Process-dependence is unacceptable — therefore ADOPT Temporal rather than BUILD"
+    verdict: ADOPT
+    covers: [R07, R08]
+  - id: CAND-4
+    name: memory_os
+    clause1_requirement_exists: false
+    note: "Recall is useful, not the core-question requirement"
+    verdict: REJECT
+    reject_as: "authority"
+    defer_as: "optional recall"
+  - id: CAND-5
+    name: provenance_platform
+    clause1_requirement_exists: true
+    clause2_prior_art_incomplete: false
+    verdict: ADOPT
+    adopt: "SLSA/in-toto/git"
+    defer: "per-thought attestation"
+  - id: CAND-6
+    name: semantic_faithfulness_of_session_b
+    clause1_requirement_exists: true
+    clause2_prior_art_incomplete: true
+    clause3_wrapper_insufficient: true
+    clause4_process_dependence_unacceptable: false
+    note: "Irreducible model property. Architecture must assume it fails. Mitigate with recovery gate."
+    verdict: not_BUILD
+    treat_as: "model_property"
+  - id: CAND-7
+    name: scientific_continuity_benchmark
+    clause1_requirement_exists: "for claims, not for operating tomorrow"
+    clause4_process_dependence_unacceptable: false
+    verdict: DEFER
+
+build_list: []

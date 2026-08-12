@@ -1,0 +1,94 @@
+# long-lived-agent-systems independent architecture audit
+# Agent-readable bundle. Do not treat as product spec or implementation plan.
+
+schema_version: 1
+bundle_id: long-lived-agent-systems-audit
+title: "Grok 4.6 Independent Audit: Long-Lived Agent Systems"
+created: "2026-08-13"
+language: en
+status: complete
+kind: architecture_prior_art_audit
+
+consumer_instructions:
+  - "Start with REPORT.md. It is the single self-contained report required by the research prompt."
+  - "Use data/*.yaml for machine extraction. YAML is a projection of REPORT.md, not a second authority."
+  - "If YAML and REPORT.md disagree, REPORT.md wins."
+  - "Every claim in structured files carries epistemic_status and source_ids."
+  - "Do not implement from this bundle. It is an audit, not a design spec."
+  - "Closed enums are in data/enums.yaml. Do not invent extra verdict values."
+
+epistemic_statuses:
+  - FACT
+  - INFERENCE
+  - HYPOTHESIS
+  - MARKETING
+  - UNKNOWN
+
+commodity_verdicts:
+  - ADOPT
+  - WRAP
+  - BUILD
+  - DELETE
+  - DEFER
+  - REJECT
+
+guarantee_levels:
+  - deterministic
+  - measured
+  - probabilistic
+  - process_dependent
+  - human_dependent
+  - unknown
+
+files:
+  - path: REPORT.md
+    role: canonical_report
+    sections: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  - path: README.md
+    role: consumption_guide
+  - path: data/enums.yaml
+    role: closed_vocabularies
+  - path: data/sources.yaml
+    role: source_registry
+  - path: data/requirements.yaml
+    role: section_2
+  - path: data/commodity-map.yaml
+    role: section_3
+  - path: data/delete-80.yaml
+    role: section_4
+  - path: data/irreducible.yaml
+    role: section_5
+  - path: data/architecture.yaml
+    role: section_6
+  - path: data/session-replacement-test.yaml
+    role: section_7
+  - path: data/child-supervision-test.yaml
+    role: section_8
+  - path: data/gap-register.yaml
+    role: section_10
+  - path: data/competing-architectures.yaml
+    role: section_9
+  - path: data/final-answers.yaml
+    role: section_11
+
+core_question: >
+  What is the smallest practical architecture that lets replaceable AI-agent
+  sessions perform long-horizon work over days/weeks/months without silently
+  losing project intent, accepted state, provenance, unfinished obligations,
+  child-agent work, or the distinction between “work finished” and “result accepted”?
+
+headline_verdict: >
+  Persistent AI memory is not the central problem. The central problem is
+  durable authoritative state plus recovery discipline. Almost every proposed
+  “agent OS / control plane” layer is a reinvention of Git, durable workflows,
+  tickets, branch protection, policy engines, workload identity, and traces.
+  After the commodity test, zero custom subsystems survive a strict BUILD bar.
+  The only justified addition is a thin WRAP: a versioned handoff/acceptance
+  contract stored outside the model, a deterministic recovery projector, and
+  enforcement that the model cannot mark work accepted.
+
+headline_build_count: 0
+headline_wrap_minimum:
+  - REQ-ACCEPTANCE-CONTRACT
+  - REQ-RECOVERY-PROJECTOR
+  - REQ-ENFORCE-NONMODEL-AUTHORITY

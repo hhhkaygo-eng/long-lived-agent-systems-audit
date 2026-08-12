@@ -1,0 +1,77 @@
+schema_version: 1
+section: 4
+canonical_source: REPORT.md
+question: "Can a custom agent OS/control plane be deleted by replacing pieces with mature primitives?"
+answer: "Yes. All custom *systems* die. Residual is policy-as-data plus a projector."
+
+replacements:
+  - custom: project_truth
+    replace_with: "Git protected ref + issues/PRs for obligations"
+    action: DELETE
+    residual: "Explicit ACCEPTED state for non-mergeables"
+  - custom: event_ledger
+    replace_with: "Git history + workflow event history + OTel"
+    action: DELETE
+    residual: "Optional projection table, not a ledger product"
+  - custom: task_tracker
+    replace_with: "Issues/PRs/Linear/Jira"
+    action: DELETE
+    residual: "WRAP so CLOSED_BY_AGENT != ACCEPTED"
+  - custom: durable_execution
+    replace_with: "Temporal / Restate / Inngest / Durable Task"
+    action: DELETE
+    residual: "None if side effects live in activities"
+  - custom: scheduler
+    replace_with: "Workflow timers + CI cron"
+    action: DELETE
+    residual: none
+  - custom: child_registry
+    replace_with: "Child workflows + parent close policy + visibility API"
+    action: DELETE
+    residual: "Stop spawning unmanaged threads"
+  - custom: policy_engine
+    replace_with: "OPA / Cedar / platform rulesets / client hooks"
+    action: DELETE
+    residual: "A few agent-specific predicates (cannot self-accept)"
+  - custom: credential_broker
+    replace_with: "GitHub App tokens + SPIFFE + cloud workload identity"
+    action: DELETE
+    residual: "Thin mint-and-scope helper is WRAP"
+  - custom: telemetry
+    replace_with: OpenTelemetry
+    action: DELETE
+    residual: "GenAI attribute mapper (WRAP)"
+  - custom: provenance
+    replace_with: "SLSA/in-toto for releases; git for text"
+    action: DELETE
+    residual: "Optional predicate 'agent session produced blob X'"
+  - custom: agent_identity
+    replace_with: "Workload identity + workflow id + git author agent[bot]"
+    action: DELETE
+    residual: "Session id is a workflow id"
+  - custom: memory
+    replace_with: "Files in repo + optional retrieval"
+    action: DELETE
+    residual: optional
+  - custom: artifact_store
+    replace_with: "Git + object store + OCI"
+    action: DELETE
+    residual: none
+  - custom: human_approvals
+    replace_with: "Required reviews + workflow signals/awakeables"
+    action: DELETE
+    residual: "Single accept event type on ticket/PR"
+  - custom: org_governance
+    replace_with: "Existing IdP, CODEOWNERS, SOC2 log sinks"
+    action: DELETE
+    residual: none
+
+false_must_builds:
+  - claim: "Agents need their own event store because LLM traces are special"
+    rebuttal: "OTel + workflow history. Special attributes, not a special store."
+  - claim: "Agents need a memory OS because context windows are small"
+    rebuttal: "Context management is runtime. Project truth does not belong in the pager."
+  - claim: "Agents need a child registry because Temporal does not know about agents"
+    rebuttal: "Make children workflows. Do not make Temporal know about agents."
+  - claim: "Checkpoints are durable execution"
+    rebuttal: "Burden of proof is on the framework; two independent sources dispute it."
