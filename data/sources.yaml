@@ -1,0 +1,352 @@
+schema_version: 1
+note: "Primary sources preferred. SECONDARY used only when primary page was incomplete or for disagreement."
+
+sources:
+  SRC-TEMPORAL-HOME:
+    type: OFFICIAL_DOCS
+    title: Temporal Docs
+    url: https://docs.temporal.io/
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-UNDERSTAND:
+    type: OFFICIAL_DOCS
+    title: Understanding Temporal
+    url: https://docs.temporal.io/evaluate/understanding-temporal
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-DE:
+    type: OFFICIAL_DOCS
+    title: What is Durable Execution
+    url: https://temporal.io/blog/what-is-durable-execution
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-CHILD:
+    type: OFFICIAL_DOCS
+    title: Child Workflows
+    url: https://docs.temporal.io/child-workflows
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-PCP:
+    type: OFFICIAL_DOCS
+    title: Parent Close Policy
+    url: https://docs.temporal.io/parent-close-policy
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-PCP-PROTO:
+    type: SOURCE_CODE
+    title: ParentClosePolicy proto
+    url: https://github.com/temporalio/api/blob/70cec27214ec2173974fb045667df324b45e705c/temporal/api/enums/v1/workflow.proto
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-GH:
+    type: SOURCE_CODE
+    title: temporalio/temporal
+    url: https://github.com/temporalio/temporal
+    retrieved: "2026-08-13"
+  SRC-TEMPORAL-REPLAY2026:
+    type: OFFICIAL_DOCS
+    title: Replay 2026 product announcements
+    url: https://temporal.io/blog/replay-2026-product-announcements
+    retrieved: "2026-08-13"
+    note: "Vendor product blog. Treat capability list as MARKETING unless independently verified."
+
+  SRC-RESTATE-DOCS:
+    type: OFFICIAL_DOCS
+    title: Restate Docs
+    url: https://docs.restate.dev/
+    retrieved: "2026-08-13"
+  SRC-RESTATE-CONCEPTS:
+    type: OFFICIAL_DOCS
+    title: Restate Key Concepts
+    url: https://docs.restate.dev/foundations/key-concepts
+    retrieved: "2026-08-13"
+  SRC-RESTATE-AGENTS:
+    type: OFFICIAL_DOCS
+    title: Restate Durable Agents
+    url: https://docs.restate.dev/ai/patterns/durable-agents
+    retrieved: "2026-08-13"
+  SRC-RESTATE-USE:
+    type: OFFICIAL_DOCS
+    title: Restate AI Agents use case
+    url: https://docs.restate.dev/use-cases/ai-agents
+    retrieved: "2026-08-13"
+
+  SRC-INNGEST-DOCS:
+    type: OFFICIAL_DOCS
+    title: Inngest Docs
+    url: https://www.inngest.com/docs
+    retrieved: "2026-08-13"
+  SRC-INNGEST-AGENTS:
+    type: SECONDARY
+    title: How to Build a Durable AI Agent with Inngest
+    url: https://www.inngest.com/blog/ai-agents-inngest-durable-steps
+    retrieved: "2026-08-13"
+  SRC-CF-WORKFLOWS:
+    type: OFFICIAL_DOCS
+    title: Cloudflare Workflows
+    url: https://developers.cloudflare.com/workflows/
+    retrieved: "2026-08-13"
+  SRC-CF-AGENTS:
+    type: OFFICIAL_DOCS
+    title: Build a Durable AI Agent (Cloudflare)
+    url: https://developers.cloudflare.com/workflows/get-started/durable-agents/
+    retrieved: "2026-08-13"
+
+  SRC-LANGGRAPH-PERS:
+    type: OFFICIAL_DOCS
+    title: LangGraph Persistence
+    url: https://docs.langchain.com/oss/python/langgraph/persistence
+    retrieved: "2026-08-13"
+  SRC-LANGGRAPH-CP:
+    type: OFFICIAL_DOCS
+    title: LangGraph Checkpoints reference
+    url: https://reference.langchain.com/python/langgraph/checkpoints
+    retrieved: "2026-08-13"
+  SRC-DIAGRID-CP:
+    type: SECONDARY
+    title: "Why Checkpoints Aren't Durable Execution (Diagrid)"
+    url: https://www.diagrid.io/blog/checkpoints-are-not-durable-execution-why-langgraph-crewai-google-adk-and-others-fall-short-for-production-agent-workflows
+    retrieved: "2026-08-13"
+    bias: "Vendor of Dapr/Diagrid durable workflows. Argument is technically coherent; treat as adversarial SECONDARY."
+  SRC-MS-AF-CP:
+    type: OFFICIAL_DOCS
+    title: Microsoft Agent Framework Workflows Checkpoints
+    url: https://learn.microsoft.com/en-us/agent-framework/workflows/checkpoints
+    retrieved: "2026-08-13"
+  SRC-MS-DURABLE-EXT:
+    type: OFFICIAL_DOCS
+    title: Durable Extension for Microsoft Agent Framework
+    url: https://learn.microsoft.com/en-us/agent-framework/integrations/durable-extension
+    retrieved: "2026-08-13"
+  SRC-AZURE-DTS-AGENTS:
+    type: OFFICIAL_DOCS
+    title: Durable Task for AI Agents
+    url: https://learn.microsoft.com/en-us/azure/durable-task/sdks/durable-task-for-ai-agents
+    retrieved: "2026-08-13"
+  SRC-MS-AF-DISC:
+    type: ISSUE
+    title: "Thoughts on supporting Durable execution #1092"
+    url: https://github.com/microsoft/agent-framework/discussions/1092
+    retrieved: "2026-08-13"
+
+  SRC-OAI-AGENTS:
+    type: OFFICIAL_DOCS
+    title: OpenAI Agents SDK
+    url: https://openai.github.io/openai-agents-python/
+    retrieved: "2026-08-13"
+  SRC-OAI-AGENTS-GUIDE:
+    type: OFFICIAL_DOCS
+    title: OpenAI Agents API guide
+    url: https://developers.openai.com/api/docs/guides/agents
+    retrieved: "2026-08-13"
+  SRC-OAI-TRACING:
+    type: SOURCE_CODE
+    title: OpenAI Agents SDK tracing.md
+    url: https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md
+    retrieved: "2026-08-13"
+
+  SRC-CC-MEMORY:
+    type: OFFICIAL_DOCS
+    title: How Claude remembers your project
+    url: https://code.claude.com/docs/en/memory
+    retrieved: "2026-08-13"
+  SRC-CC-SUBAGENTS:
+    type: OFFICIAL_DOCS
+    title: Create custom subagents
+    url: https://code.claude.com/docs/en/sub-agents
+    retrieved: "2026-08-13"
+
+  SRC-LETTA-GH:
+    type: SOURCE_CODE
+    title: letta-ai/letta
+    url: https://github.com/letta-ai/letta
+    retrieved: "2026-08-13"
+  SRC-MEMGPT-PAPER:
+    type: PAPER
+    title: "MemGPT: Towards LLMs as Operating Systems"
+    url: https://arxiv.org/abs/2310.08560
+    retrieved: "2026-08-13"
+  SRC-LETTA-MEMORY:
+    type: SECONDARY
+    title: Agent Memory (Letta blog)
+    url: https://www.letta.com/blog/agent-memory/
+    retrieved: "2026-08-13"
+  SRC-LETTA-BLOCKS:
+    type: SECONDARY
+    title: Memory Blocks (Letta blog)
+    url: https://www.letta.com/blog/memory-blocks/
+    retrieved: "2026-08-13"
+
+  SRC-OPENHANDS-TASK:
+    type: OFFICIAL_DOCS
+    title: OpenHands Task Tool Set
+    url: https://docs.openhands.dev/sdk/guides/task-tool-set
+    retrieved: "2026-08-13"
+  SRC-OPENHANDS-SDK-PAPER:
+    type: PAPER
+    title: The OpenHands Software Agent SDK
+    url: https://arxiv.org/html/2511.03690v1
+    retrieved: "2026-08-13"
+  SRC-OPENHANDS-GH:
+    type: SOURCE_CODE
+    title: OpenHands/openhands
+    url: https://github.com/OpenHands/openhands
+    retrieved: "2026-08-13"
+
+  SRC-TAC-ARXIV:
+    type: PAPER
+    title: "TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks"
+    url: https://arxiv.org/abs/2412.14161
+    retrieved: "2026-08-13"
+  SRC-TAC-HTML:
+    type: PAPER
+    title: TheAgentCompany HTML
+    url: https://arxiv.org/html/2412.14161v1
+    retrieved: "2026-08-13"
+  SRC-TAC-NIPS:
+    type: PAPER
+    title: TheAgentCompany NeurIPS 2025 PDF
+    url: https://papers.nips.cc/paper_files/paper/2025/file/0d744742f6fac4d1134c019b7cef3c8a-Paper-Datasets_and_Benchmarks_Track.pdf
+    retrieved: "2026-08-13"
+  SRC-LOCOMO:
+    type: PAPER
+    title: LoCoMo project page
+    url: https://snap-research.github.io/locomo/
+    retrieved: "2026-08-13"
+  SRC-LME-V2:
+    type: PAPER
+    title: LongMemEval-V2
+    url: https://arxiv.org/html/2605.12493v1
+    retrieved: "2026-08-13"
+  SRC-MEM0-2026:
+    type: SECONDARY
+    title: AI Agent Memory 2026 Progress Benchmark Report (Mem0)
+    url: https://mem0.ai/blog/state-of-ai-agent-memory-2026
+    retrieved: "2026-08-13"
+    bias: "Vendor benchmark report."
+  SRC-LETTA-ISSUE-3115:
+    type: ISSUE
+    title: "Add Standard Memory Evaluation Benchmarks #3115"
+    url: https://github.com/letta-ai/letta/issues/3115
+    retrieved: "2026-08-13"
+  SRC-ARIZE-LH:
+    type: SECONDARY
+    title: Long-horizon agent benchmarks field guide
+    url: https://arize.com/blog/long-horizon-agent-benchmarks-field-guide/
+    retrieved: "2026-08-13"
+
+  SRC-SLSA-PROV:
+    type: SPEC
+    title: SLSA Provenance v1.0
+    url: https://slsa.dev/spec/v1.0/provenance
+    retrieved: "2026-08-13"
+    note: "Site states v1.2 is current SLSA spec; provenance predicate type remains https://slsa.dev/provenance/v1"
+  SRC-SLSA-INTOTO:
+    type: OFFICIAL_DOCS
+    title: in-toto and SLSA
+    url: https://slsa.dev/blog/2023/05/in-toto-and-slsa
+    retrieved: "2026-08-13"
+  SRC-INTOTO-ATT:
+    type: SPEC
+    title: in-toto Attestation Framework
+    url: https://github.com/in-toto/attestation
+    retrieved: "2026-08-13"
+  SRC-PROV-OVERVIEW:
+    type: SPEC
+    title: W3C PROV-Overview
+    url: https://www.w3.org/TR/prov-overview/
+    retrieved: "2026-08-13"
+  SRC-PROV-DM:
+    type: SPEC
+    title: W3C PROV-DM
+    url: https://www.w3.org/TR/prov-dm/
+    retrieved: "2026-08-13"
+
+  SRC-SPIFFE-CONCEPTS:
+    type: OFFICIAL_DOCS
+    title: SPIFFE Concepts
+    url: https://spiffe.io/docs/latest/spiffe/concepts/
+    retrieved: "2026-08-13"
+  SRC-SPIRE-CONCEPTS:
+    type: OFFICIAL_DOCS
+    title: SPIRE Concepts
+    url: https://spiffe.io/docs/latest/spire-about/spire-concepts/
+    retrieved: "2026-08-13"
+  SRC-OPA:
+    type: OFFICIAL_DOCS
+    title: Open Policy Agent
+    url: https://openpolicyagent.org/
+    retrieved: "2026-08-13"
+  SRC-CEDAR:
+    type: SPEC
+    title: Cedar policy language
+    url: https://cedarpolicy.com/
+    retrieved: "2026-08-13"
+
+  SRC-GH-PROTECTED:
+    type: OFFICIAL_DOCS
+    title: About protected branches
+    url: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
+    retrieved: "2026-08-13"
+  SRC-GH-CODEOWNERS:
+    type: OFFICIAL_DOCS
+    title: About code owners
+    url: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+    retrieved: "2026-08-13"
+  SRC-GH-APP-INSTALL:
+    type: OFFICIAL_DOCS
+    title: Authenticating as a GitHub App installation
+    url: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation
+    retrieved: "2026-08-13"
+  SRC-GH-APP-TOKEN:
+    type: OFFICIAL_DOCS
+    title: Generating an installation access token
+    url: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app
+    retrieved: "2026-08-13"
+  SRC-GH-SCOPED-TOKENS:
+    type: OFFICIAL_DOCS
+    title: New limits on scoped token creation for GitHub Apps
+    url: https://github.blog/changelog/2024-02-22-new-limits-on-scoped-token-creation-for-github-apps/
+    retrieved: "2026-08-13"
+
+  SRC-FOWLER-ES:
+    type: SECONDARY
+    title: "What do you mean by Event-Driven? (Fowler 2017)"
+    url: https://martinfowler.com/articles/201701-event-driven.html
+    retrieved: "2026-08-13"
+  SRC-FOWLER-ES-ORIG:
+    type: SECONDARY
+    title: Event Sourcing (Fowler 2005)
+    url: https://martinfowler.com/eaaDev/EventSourcing.html
+    retrieved: "2026-08-13"
+  SRC-AZURE-ES:
+    type: OFFICIAL_DOCS
+    title: Event Sourcing Pattern
+    url: https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing
+    retrieved: "2026-08-13"
+
+  SRC-OTEL-TRACES:
+    type: OFFICIAL_DOCS
+    title: OpenTelemetry Traces
+    url: https://opentelemetry.io/docs/concepts/signals/traces/
+    retrieved: "2026-08-13"
+  SRC-OTEL-GENAI-ATTR:
+    type: SPEC
+    title: OpenTelemetry GenAI attributes registry
+    url: https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/
+    retrieved: "2026-08-13"
+  SRC-OTEL-GENAI-MOVED:
+    type: SPEC
+    title: GenAI conventions moved notice
+    url: https://opentelemetry.io/docs/specs/semconv/gen-ai/
+    retrieved: "2026-08-13"
+  SRC-OTEL-STABILITY-SEC:
+    type: SECONDARY
+    title: "As of May 2026, GenAI semconv remain Development"
+    url: https://greptime.com/blogs/2026-05-09-opentelemetry-genai-semantic-conventions
+    retrieved: "2026-08-13"
+  SRC-OPENINFERENCE:
+    type: SECONDARY
+    title: OpenInference overview (Arize)
+    url: https://arize.com/docs/phoenix/tracing/concepts-tracing/otel-openinference/overview
+    retrieved: "2026-08-13"
+
+  SRC-ZYLOS-DE:
+    type: SECONDARY
+    title: Durable Execution for AI Agent Runtimes
+    url: https://zylos.ai/research/2026-04-24-durable-execution-agent-runtimes/
+    retrieved: "2026-08-13"
